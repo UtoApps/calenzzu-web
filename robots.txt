@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /g/
+Disallow: /oauth/
+
+Sitemap: https://calenzzu.com/sitemap.xml

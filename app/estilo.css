@@ -1,0 +1,439 @@
+/* =============================================================================
+   CALENZZU — SISTEMA VISUAL DE LA APP
+   Hermana de Chronic Friends: MISMAS FORMAS, OTRA PALETA.
+   Escrito el 5 sep 2026 · Gerhard: «tiene que ser apps hermanas y muy parecidas.
+   Mismo diseño y estilo de botones pero para Calenzzu con los colores y logo de
+   Calenzzu. El botón de Home tiene que ser el logo de Calenzzu.»
+
+   🔴 ESTO NO ES UNA PROPUESTA: es el sistema REAL de Chronic Friends, copiado de
+   ~/Desktop/Chronic Friends/design/styles.css (el fichero que Claude Design ya
+   conoce), con la paleta de Calenzzu puesta encima. Los números de las sombras,
+   los radios, las alturas y las curvas de transición son LOS MISMOS. Lo único
+   que cambia son los colores y la tipografía de marca.
+
+   👉 Claude Design: usa estas clases tal cual. No inventes otro sistema de
+   botones, no cambies los radios ni las sombras. Si necesitas un componente que
+   no está aquí, constrúyelo con estos mismos ingredientes.
+   ============================================================================= */
+
+
+/* =============================================================================
+   1. TOKENS — la paleta de Calenzzu
+   Los colores salen de brand/ (los 4 SVG) y del documento de la landing.
+   ============================================================================= */
+:root{
+  /* --- Violeta: la primera agenda. Es el color DOMINANTE de la app --- */
+  --violet-100:#EDE7FF;
+  --violet-200:#D6C8FF;
+  --violet-300:#B79EFF;
+  --violet-400:#9B7BFF;   /* claro de marca */
+  --violet-500:#7B5CF0;
+  --violet-600:#5B2EE5;   /* oscuro de marca */
+  --violet-700:#4A25BC;
+  --violet-800:#372091;
+  --violet-900:#2A2158;
+
+  /* --- Verde: la segunda agenda. Es el color de LO QUE SALE BIEN --- */
+  --green-100:#DCFBF0;
+  --green-200:#A7F3D8;
+  --green-300:#53E8B2;    /* claro de marca */
+  --green-400:#2ACF97;
+  --green-500:#12A177;    /* oscuro de marca */
+  --green-600:#0D8562;
+
+  /* --- El cruce: donde las dos agendas se pisan. Es EL HUECO LIBRE --- */
+  --cross-top:#5A5BDD;
+  --cross-bot:#1F9AA0;
+
+  /* --- Fondos --- */
+  --canvas:#2A2158;       /* violeta profundo, detrás del móvil */
+  --canvas-2:#1E1B39;     /* la tinta de marca */
+  --paper:#FBF9F8;        /* el papel de la landing: el fondo de las pantallas */
+  --card:#FFFFFF;
+  --card-soft:#F4F0FF;    /* tarjeta con tinte violeta muy suave */
+
+  /* --- Texto --- */
+  --ink:#1E1B39;          /* 🔴 NUNCA negro puro */
+  --ink-soft:#4A4470;
+  --muted:#7C769B;
+  --muted-2:#A7A2C0;
+  --on-violet:#FFFFFF;
+
+  /* --- Cabecera --- */
+  --hdr-top:#7B5CF0;
+  --hdr-bot:#5B2EE5;
+
+  /* --- Forma y elevación — IDÉNTICOS a Chronic Friends --- */
+  --radius-card:26px;
+  --radius-btn:16px;
+  --radius-pill:30px;
+}
+
+
+/* =============================================================================
+   2. BASE
+   ============================================================================= */
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{margin:0;height:100%;}
+
+body{
+  /* 🔤 TIPOGRAFÍA: aquí Calenzzu SÍ se separa de Chronic Friends (que usa Poppins).
+     Nunito Sans es la fuente de la marca Calenzzu, ya está en la landing y en la
+     web publicada. Las dos apps son hermanas por las FORMAS, no por la letra. */
+  font-family:'Nunito Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  background:
+    radial-gradient(120% 90% at 50% 0%, #3B2F73 0%, var(--canvas) 45%, var(--canvas-2) 100%);
+  display:flex;align-items:center;justify-content:center;
+  min-height:100%;overflow:hidden;
+  color:var(--ink);
+}
+
+/* Los títulos de marca van en 800, como el logotipo */
+h1,h2,.ttl,.hero-num{font-weight:800;letter-spacing:-0.01em;}
+
+
+/* =============================================================================
+   3. MARCO DEL MÓVIL — copiado de Chronic Friends sin tocar una cifra
+   ============================================================================= */
+.stage{display:flex;align-items:center;justify-content:center;width:100%;height:100%;}
+.phone{
+  position:relative;width:393px;height:852px;border-radius:54px;
+  background:#161232;              /* el bisel, en violeta muy oscuro */
+  padding:13px;
+  box-shadow:
+    0 2px 4px rgba(0,0,0,.5) inset,
+    0 50px 80px -20px rgba(0,0,0,.6),
+    0 20px 40px -10px rgba(0,0,0,.45);
+  flex:none;
+}
+.phone::after{ /* insinúa los botones laterales */
+  content:"";position:absolute;left:-3px;top:170px;width:3px;height:62px;border-radius:3px;
+  background:#241d47;box-shadow:0 84px 0 #241d47,0 -78px 0 #241d47;
+}
+.screen{
+  position:relative;width:100%;height:100%;border-radius:42px;overflow:hidden;
+  background:var(--paper);display:flex;flex-direction:column;
+}
+/* Tapa la línea clara de antialiasing en el borde redondeado. Misma solución
+   que en Chronic Friends: un anillo del color del bisel, por encima de todo. */
+.screen::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;
+  box-shadow:inset 0 0 0 1.25px #161232;
+  pointer-events:none;z-index:200;
+}
+.notch{
+  position:absolute;top:11px;left:50%;transform:translateX(-50%);
+  width:120px;height:34px;background:#161232;border-radius:20px;z-index:60;
+}
+.screen-scroll{
+  flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;
+  position:relative;scrollbar-width:none;-ms-overflow-style:none;
+}
+.screen-scroll::-webkit-scrollbar{width:0;display:none;}
+
+
+/* =============================================================================
+   4. CABECERA
+   ============================================================================= */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:6px 22px 14px;flex:none;
+  background:linear-gradient(180deg,var(--hdr-top) 0%,var(--hdr-bot) 100%);
+}
+.topbar .ttl{font-size:20px;font-weight:800;color:#fff;}
+
+/* Botón redondo esférico de la cabecera (ajustes, atrás…) */
+.icon-btn{
+  width:42px;height:42px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;border:none;color:#F1EBFF;
+  background:radial-gradient(120% 120% at 30% 25%, #8B6BF5, #4A25BC);
+  box-shadow:
+    0 5px 10px rgba(30,20,70,.35),
+    inset 0 2px 2px rgba(255,255,255,.35),
+    inset 0 -3px 5px rgba(35,20,85,.45);
+  transition:transform .12s ease,box-shadow .12s ease;
+}
+.icon-btn:active{
+  transform:translateY(2px);
+  box-shadow:0 2px 5px rgba(30,20,70,.4),inset 0 2px 4px rgba(35,20,85,.5);
+}
+
+
+/* =============================================================================
+   5. 🔴 LOS BOTONES 3D — EL CORAZÓN DEL ENCARGO
+   Estructura idéntica a la de Chronic Friends: degradado vertical + UNA sombra
+   proyectada + DOS sombras internas (brillo arriba, oscuro abajo) y un
+   translateY(3px) al pulsar. Lo único que cambia es el color.
+   ============================================================================= */
+.btn3d{
+  border:none;cursor:pointer;color:#fff;font-family:inherit;font-weight:700;
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  min-width:0;                     /* para que una fila de botones pueda encoger */
+  border-radius:var(--radius-btn);
+  padding:14px 22px;font-size:15px;
+
+  /* VIOLETA = el botón principal de Calenzzu */
+  background:linear-gradient(180deg,var(--violet-400) 0%,var(--violet-600) 100%);
+  box-shadow:
+    0 8px 16px rgba(91,46,229,.42),
+    inset 0 2px 2px rgba(255,255,255,.55),
+    inset 0 -4px 6px rgba(45,20,120,.45);
+  transition:transform .12s ease,box-shadow .12s ease;
+}
+.btn3d:active{
+  transform:translateY(3px);
+  box-shadow:0 3px 7px rgba(91,46,229,.4),inset 0 2px 4px rgba(45,20,120,.4);
+}
+.btn3d.round{border-radius:50%;}
+.btn3d.pill{border-radius:var(--radius-pill);padding:13px 22px;}
+.btn3d.full{width:100%;}
+
+/* --- VERDE = lo que sale bien. Se usa en DOS sitios y en ninguno más:
+       · el botón del invitado («Ver nuestros ratos libres»): ella RECIBE algo
+       · confirmar / conectado
+   El verde de Calenzzu significa «hay hueco». Si se usa de adorno, deja de
+   significar nada. --- */
+.btn3d.free{
+  background:linear-gradient(180deg,var(--green-300) 0%,var(--green-500) 100%);
+  box-shadow:
+    0 8px 16px rgba(18,161,119,.40),
+    inset 0 2px 2px rgba(255,255,255,.60),
+    inset 0 -4px 6px rgba(8,105,78,.45);
+  /* 🎨 Tinta verde MUY oscura, y el valor está calculado, no elegido a ojo.
+     Sobre la parte baja del degradado (#12A177, que es donde el contraste es
+     PEOR) da 4,68:1 → pasa AA para texto normal. El #06301F que había antes
+     daba 4,38:1 y NO pasaba. Blanco puro sobre este verde daría 2,4:1: por eso
+     este botón lleva tinta oscura y no blanca, al revés que el violeta. */
+  color:#052A1A;
+}
+.btn3d.free:active{
+  box-shadow:0 3px 7px rgba(18,161,119,.4),inset 0 2px 4px rgba(8,105,78,.4);
+}
+
+/* --- OSCURO = acciones secundarias sobre fondo claro --- */
+.btn3d.dark{
+  background:radial-gradient(120% 120% at 32% 26%, #4C3A9E, #2A2158);
+  box-shadow:0 7px 14px rgba(25,15,60,.5),inset 0 2px 2px rgba(255,255,255,.28),inset 0 -4px 7px rgba(15,10,45,.55);
+  color:#EDE7FF;
+}
+
+/* --- SUAVE = «Copiar enlace», «Ahora no» y demás terceras opciones --- */
+.btn3d.soft{
+  background:linear-gradient(180deg,#ffffff,#EDE9F6);
+  color:var(--ink-soft);
+  box-shadow:0 7px 14px rgba(120,110,160,.30),inset 0 2px 2px rgba(255,255,255,.9),inset 0 -3px 6px rgba(140,130,180,.35);
+}
+
+/* --- El botón de WhatsApp lleva SU verde, no el nuestro: la gente lo reconoce
+       por el color. Es la única excepción de marca en toda la app. --- */
+.btn3d.whatsapp{
+  background:linear-gradient(180deg,#4FD265 0%,#1FA855 100%);
+  box-shadow:0 8px 16px rgba(31,168,85,.40),inset 0 2px 2px rgba(255,255,255,.55),inset 0 -4px 6px rgba(15,120,60,.45);
+}
+
+
+/* =============================================================================
+   6. TARJETAS — mismo cristal que Chronic Friends
+   ============================================================================= */
+.card{
+  background:rgba(255,255,255,.72);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-radius:var(--radius-card);border:1px solid rgba(255,255,255,.65);
+  box-shadow:0 12px 30px -10px rgba(40,25,95,.25),inset 0 1px 1px rgba(255,255,255,.7);
+  padding:16px;
+}
+.card-solid{
+  background:var(--card);border-radius:var(--radius-card);
+  box-shadow:0 12px 30px -12px rgba(40,25,95,.22);
+  padding:16px;
+}
+
+/* 🎯 LA TARJETA DEL MEJOR RATO — la pieza más importante de la app.
+   Va en el color del CRUCE, porque eso es literalmente lo que es: el trozo
+   donde las dos agendas se pisan y las dos están libres. */
+.card-hueco{
+  border-radius:var(--radius-card);
+  /* 🎨 OJO AL EXTREMO OSCURO — está calculado, no lo «corrijas» al token.
+     El color de marca del cruce es #5A5BDD → #1F9AA0. Pero con blanco encima,
+     #1F9AA0 sólo da 3,42:1: vale para el titular grande (que es texto grande y
+     le basta 3:1) y NO vale para la línea de la duración. Bajando ese extremo a
+     #1B7F8A el contraste sube a 4,74:1 y TODO el texto de la tarjeta pasa AA.
+     Sigue siendo el mismo color, un punto más hondo. */
+  background:linear-gradient(150deg,var(--cross-top) 0%,#1B7F8A 100%);
+  box-shadow:
+    0 14px 34px -10px rgba(31,90,150,.45),
+    inset 0 2px 3px rgba(255,255,255,.45),
+    inset 0 -5px 10px rgba(15,60,90,.35);
+  color:#fff;padding:22px 20px;text-align:center;
+}
+.card-hueco .dia{font-size:26px;font-weight:800;line-height:1.15;}
+.card-hueco .hora{font-size:21px;font-weight:700;margin-top:2px;}
+/* 🔴 SIN opacity. Un blanco al 85 % sobre este fondo se queda en 2,89:1 y la
+   línea que dice cuánto dura el hueco es justo la que hay que poder leer.
+   Si hace falta jerarquía, se baja el tamaño o el peso — nunca la opacidad. */
+.card-hueco .dur{font-size:14.5px;font-weight:700;margin-top:6px;}
+
+/* Fila de lista (las alternativas) */
+.lrow{display:flex;align-items:center;gap:14px;padding:14px 16px;}
+.lrow + .lrow{border-top:1px solid rgba(124,118,155,.16);}
+
+/* Icono cuadrado con relieve (avatares de persona, iconos de sección) */
+.badge-ic{
+  width:46px;height:46px;border-radius:16px;flex:none;
+  display:flex;align-items:center;justify-content:center;color:#F1EBFF;
+  background:radial-gradient(120% 120% at 30% 25%, #8B6BF5, #4A25BC);
+  box-shadow:0 5px 10px rgba(30,20,70,.3),inset 0 2px 2px rgba(255,255,255,.3),inset 0 -3px 5px rgba(35,20,85,.4);
+}
+.badge-ic.verde{background:radial-gradient(120% 120% at 30% 25%, var(--green-300), var(--green-500));color:#06301F;}
+
+/* Marca de verificación / estado conectado */
+.check{
+  width:34px;height:34px;border-radius:50%;flex:none;
+  display:flex;align-items:center;justify-content:center;color:#06301F;
+  background:linear-gradient(180deg,var(--green-300),var(--green-500));
+  box-shadow:0 4px 8px rgba(18,161,119,.4),inset 0 1px 2px rgba(255,255,255,.5);
+}
+/* Sin conectar: apagado, y se nota que está apagado */
+.check.off{
+  background:linear-gradient(180deg,#EDE9F6,#D5CFE6);color:#8F89AC;
+  box-shadow:inset 0 1px 3px rgba(90,80,130,.3);
+}
+
+
+/* =============================================================================
+   7. LAS PASTILLAS DE MODO (Una cena · Un día · Un viaje)
+   Es el ÚNICO ajuste de toda la app. Relieve suave apagadas, 3D violeta la
+   elegida — el mismo lenguaje que la píldora activa de la barra inferior.
+   ============================================================================= */
+.modos{display:flex;gap:8px;padding:12px 16px;}
+.modo{
+  flex:1 1 0;min-width:0;border:none;cursor:pointer;font-family:inherit;
+  height:40px;border-radius:var(--radius-pill);
+  font-size:13.5px;font-weight:700;white-space:nowrap;
+  background:linear-gradient(180deg,#ffffff,#EDE9F6);
+  color:var(--ink-soft);
+  box-shadow:0 5px 10px rgba(120,110,160,.22),inset 0 1px 1px rgba(255,255,255,.9);
+  transition:transform .12s ease,box-shadow .12s ease,color .12s ease;
+}
+.modo.sel{
+  background:linear-gradient(180deg,var(--violet-400) 0%,var(--violet-600) 100%);
+  color:#fff;
+  box-shadow:0 8px 16px rgba(91,46,229,.42),inset 0 2px 2px rgba(255,255,255,.55),inset 0 -4px 6px rgba(45,20,120,.45);
+  transform:translateY(-1px);
+}
+
+
+/* =============================================================================
+   8. BARRA INFERIOR — y 🔴 EL BOTÓN DE HOME, QUE ES EL LOGO DE CALENZZU
+   ============================================================================= */
+.tabbar{
+  position:relative;z-index:50;flex:none;
+  display:flex;align-items:center;justify-content:center;
+  padding:10px 10px 26px;
+  background:rgba(251,249,248,.92);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-top:1px solid rgba(124,118,155,.14);
+}
+.tab{
+  border:none;background:none;cursor:pointer;font-family:inherit;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:5px;
+  color:var(--muted-2);font-size:10px;font-weight:700;padding:4px 2px;flex:1 1 0;min-width:0;
+  white-space:nowrap;text-align:center;transition:color .15s ease;
+}
+.tab .tab-ic{
+  width:46px;height:38px;border-radius:14px;flex:none;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s ease;
+}
+.tab.active{color:var(--violet-600);}
+.tab.active .tab-ic{
+  color:#fff;
+  background:linear-gradient(180deg,var(--violet-400),var(--violet-600));
+  box-shadow:0 6px 12px rgba(91,46,229,.42),inset 0 2px 2px rgba(255,255,255,.5),inset 0 -3px 5px rgba(45,20,120,.4);
+  transform:translateY(-2px);
+}
+.tab:not(.active) .tab-ic{color:var(--muted);}
+
+/* --- 🔴 EL HOME ES EL SÍMBOLO DE CALENZZU, NO UNA CASITA ---
+   Petición literal de Gerhard el 5 sep 2026.
+   El símbolo (brand/calenzzu-simbolo.svg) ya lleva sus dos colores y el óvalo
+   blanco del hueco: si se mete DENTRO de la píldora violeta, el violeta del
+   logo se pierde contra el violeta del fondo. Por eso el Home activo NO usa la
+   píldora: usa un ANILLO alrededor del símbolo, que es el mismo relieve con
+   otra forma. */
+.tab-home .tab-ic{
+  background:none !important;box-shadow:none !important;transform:none !important;
+  width:46px;height:46px;border-radius:50%;padding:5px;
+}
+.tab-home .tab-ic img,
+.tab-home .tab-ic svg{width:100%;height:100%;display:block;}
+
+/* apagado: el logo en gris violáceo, para no competir con la pestaña activa */
+.tab-home:not(.active) .tab-ic{filter:saturate(.25) opacity(.55);}
+
+/* activo: el logo a todo color, levantado, con el anillo de relieve */
+.tab-home.active .tab-ic{
+  filter:none;
+  transform:translateY(-2px) !important;
+  background:radial-gradient(120% 120% at 30% 25%, #ffffff, #F1ECFF) !important;
+  box-shadow:
+    0 6px 14px rgba(91,46,229,.35),
+    inset 0 2px 2px rgba(255,255,255,.9),
+    0 0 0 2px rgba(155,123,255,.45) !important;
+}
+
+
+/* =============================================================================
+   9. INTERRUPTOR (por si hace falta en ajustes)
+   ============================================================================= */
+.toggle{
+  width:62px;height:34px;border-radius:20px;border:none;cursor:pointer;
+  position:relative;flex:none;
+  background:linear-gradient(180deg,#D5CFE6,#B8B0D2);
+  box-shadow:inset 0 2px 5px rgba(70,60,110,.45),inset 0 -1px 1px rgba(255,255,255,.4);
+  transition:background .25s ease;
+}
+.toggle .knob{
+  position:absolute;top:3px;left:3px;width:28px;height:28px;border-radius:50%;
+  background:linear-gradient(180deg,#fff,#F1ECFF);
+  box-shadow:0 3px 6px rgba(40,25,95,.4),inset 0 1px 1px rgba(255,255,255,.9);
+  transition:left .25s cubic-bezier(.4,1.4,.5,1);
+}
+.toggle.on{
+  background:linear-gradient(180deg,var(--green-300),var(--green-500));
+  box-shadow:inset 0 2px 4px rgba(8,105,78,.4),inset 0 -1px 1px rgba(255,255,255,.3);
+}
+.toggle.on .knob{left:31px;}
+
+
+/* =============================================================================
+   10. AVISOS — el banner honesto de «falta alguien»
+   Ámbar cuando faltan datos, y NO rojo: no es un error, es información.
+   ============================================================================= */
+.aviso{
+  background:linear-gradient(180deg,#FFF6E0,#FDEFC9);
+  border:1.5px solid #F0C860;border-radius:var(--radius-card);
+  padding:16px;color:#5B4410;font-size:14px;line-height:1.5;
+  box-shadow:0 10px 24px -12px rgba(120,90,20,.35);
+}
+.aviso strong{color:#3F2F06;}
+
+
+/* =============================================================================
+   11. LO QUE NO SE HACE — reglas de Gerhard, no gustos
+   ============================================================================= */
+/* 🚫 NADA de tilt 3D: tarjetas que se inclinan y giran siguiendo el cursor.
+      A Gerhard le marea. Lo pidió quitar de Romizzu HQ el 19 jul 2026.
+      El relieve de los botones es ESTÁTICO: se hunden al pulsarlos y ya está.
+      Prohibido: transform:perspective() rotateX/rotateY guiado por el puntero,
+      transform-style:preserve-3d en tarjetas.
+   🚫 NADA de cargar librerías ni fuentes desde internet en la app final: la
+      landing de Calenzzu ya se cayó por eso (3,2 MB de unpkg.com y pantalla en
+      blanco sin conexión). Las fuentes van servidas desde el propio proyecto,
+      como en web/fonts/.
+   ✅ SÍ valen: animación de entrada, elevación en hover, el hundido al pulsar.  */
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important;}
+}

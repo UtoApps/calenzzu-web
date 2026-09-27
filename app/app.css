@@ -1,0 +1,44 @@
+/* Calenzzu — encima de estilo.css (el sistema de Claude Design, sin tocar una cifra).
+   Aquí solo lo que cambia de la maqueta al móvil de verdad: la pantalla ocupa todo el
+   móvil (sin marco ni muesca), respeta las zonas seguras y, en ordenador, se ve como un
+   móvil centrado sobre el fondo violeta. */
+
+body{height:100%;min-height:100dvh;}
+.app{
+  position:relative;width:100%;height:100vh;height:100dvh;overflow:hidden;
+  background:var(--paper);display:flex;flex-direction:column;
+}
+@media (min-width:520px) and (min-height:640px){
+  .app{
+    width:393px;height:min(852px,calc(100dvh - 40px));border-radius:42px;
+    box-shadow:0 50px 80px -20px rgba(0,0,0,.6),0 20px 40px -10px rgba(0,0,0,.45);
+  }
+}
+
+/* Zonas seguras (muesca y barra de inicio) en vez de la muesca dibujada de la maqueta */
+.topbar{padding-top:calc(env(safe-area-inset-top,0px) + 14px);}
+.cz-portada{padding-top:calc(env(safe-area-inset-top,0px) + 56px) !important;}
+.tabbar{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 16px);}
+.screen-scroll{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 22px);}
+
+/* Lo que la maqueta pedía en su <style> propio */
+a{color:var(--violet-600);text-decoration:none;}
+a:hover{color:var(--violet-700);text-decoration:underline;}
+@keyframes cz-late{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.18);opacity:.45}}
+@keyframes cz-spin{to{transform:rotate(360deg)}}
+.cz-spin{animation:cz-spin 1.6s linear infinite;}
+.cz-loading{filter:saturate(.6);transition:filter .2s ease;}
+button:focus-visible,a:focus-visible{outline:3px solid var(--violet-400);outline-offset:3px;}
+
+/* Aviso breve («Enlace copiado») */
+#cz-toast{
+  position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 96px);
+  transform:translate(-50%,20px);opacity:0;pointer-events:none;z-index:500;
+  background:var(--ink);color:#fff;font:700 14px/1.3 'Nunito Sans',system-ui,sans-serif;
+  padding:11px 18px;border-radius:30px;box-shadow:0 10px 24px rgba(20,10,50,.35);
+  transition:opacity .2s ease,transform .2s ease;max-width:86vw;text-align:center;
+}
+#cz-toast.on{opacity:1;transform:translate(-50%,0);}
+
+/* Sin JavaScript no hay app: al menos que se diga */
+.cz-nojs{padding:40px 24px;font:700 16px/1.5 'Nunito Sans',system-ui,sans-serif;color:var(--ink);}

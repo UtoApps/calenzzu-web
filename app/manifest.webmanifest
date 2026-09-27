@@ -1,0 +1,27 @@
+{
+ "name": "Calenzzu",
+ "short_name": "Calenzzu",
+ "start_url": "/app/",
+ "scope": "/",
+ "display": "standalone",
+ "background_color": "#FBF9F8",
+ "theme_color": "#5B2EE5",
+ "icons": [
+  {
+   "src": "/assets/icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "/assets/icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  },
+  {
+   "src": "/assets/maskable-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ]
+}
